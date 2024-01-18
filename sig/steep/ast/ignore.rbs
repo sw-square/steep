@@ -10,6 +10,8 @@ module Steep
       class IgnoreStart
         attr_reader comment: Comment
 
+        attr_reader location: Location[bot, bot]
+
         def initialize: (Comment, Location[bot, bot]) -> void
 
         def line: () -> Integer
@@ -18,6 +20,8 @@ module Steep
       class IgnoreEnd
         attr_reader comment: Comment
 
+        attr_reader location: Location[bot, bot]
+
         def initialize: (Comment, Location[bot, bot]) -> void
 
         def line: () -> Integer
@@ -25,17 +29,19 @@ module Steep
 
       class IgnoreLine
         type diagnostic = Location[:name, :following_comma]
-        type all = Location[:keyword, bot]
-
         type diagnostics = Array[diagnostic]
 
         attr_reader comment: Comment
+
+        attr_reader location: Location[:keyword, bot]
+
+        attr_reader raw_diagnostics: diagnostics
 
         def initialize: (Comment, diagnostics, Location[:keyword, bot]) -> void
 
         def line: () -> Integer
 
-        def diagnostics: () -> diagnostics
+        def ignored_diagnostics: () -> (:all | Array[String])
       end
     end
   end
